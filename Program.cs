@@ -22,9 +22,20 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     options.Password.RequireNonAlphanumeric = false;
     options.SignIn.RequireConfirmedEmail = false;
 
-});
+}).AddEntityFrameworkStores<DataContext>();
+
+
 
 var app = builder.Build();
+
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+    dbContext.Database.EnsureCreated();
+}
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -39,6 +50,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
