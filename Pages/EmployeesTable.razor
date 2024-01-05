@@ -21,7 +21,7 @@
                                     <div class="employee-position centered-subdiv">@employee.Position</div>
                                 </div>
                             </td>
-                            <td class="centered-call @GetEmployeeTypeStyle(employee.Type)">@employee.Type</td>
+                            <td class="centered-call @GetEmployeeTypeStyle(employee.Type)">@employee.Type.GetDisplayName</td>
                             <td class="centered-call employee-salary">@employee.Salary</td>
                         </tr>
                     }

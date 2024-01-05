@@ -1,0 +1,13 @@
+@page "/add-employee"
+@using blazor.Models.DTOs
+@using blazor.Services
+@code {
+    [Inject] private IEmployeeService EmployeeService {get; set;}
+
+    private AddEmployeeForm addEmployeeForm = new();
+
+    private async Task addNewEmployee()
+    {
+        var response = await EmployeeService.AddEmployee(addEmployeeForm);
+    }
+}
