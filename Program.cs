@@ -1,6 +1,6 @@
 using blazor.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNet.Identity.EntityFramework;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -9,17 +9,18 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString));
-// builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
-// {
-//     options.Password.RequireDigit = false;
-//     options.Password.RequiredLength = 5;
-//     options.Password.RequireLowercase = false;
-//     options.Password.RequireUppercase = false;
-//     options.Password.RequireNonAlphanumeric = false;
-//     options.SignIn.RequireConfirmedEmail = false;
+builder.Services.AddDbContextFactory<DataContext>(options => options.UseSqlServer(connectionString));
 
-// }).AddEntityFrameworkStores<DataContext>();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 5;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.SignIn.RequireConfirmedEmail = false;
+})
+    .AddEntityFrameworkStores<DataContext>();
 
 
 
