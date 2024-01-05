@@ -1,0 +1,56 @@
+@page "/employees"
+
+@using blazor.Services
+@using blazor.Models
+
+@if (Employees != null)
+{
+    <blazor.Components.Card>
+        <div class="table-responsive">
+            <table class="table table-borderless mb-0">
+                <tbody>
+                    @foreach (var employee in Employees)
+                    {
+                        <tr class="shadow-lg m-1 employee-row mb-t">
+                            <td class="centered-call">
+                                <img class="round-image" width="60" src="@employee.ImgUrl" alt="Employee Image">
+                            </td>
+                            <td>
+                                <div class="pt-2">
+                                    <div class="employee-name centered-subdiv">@employee.Name</div>
+                                    <div class="employee-position centered-subdiv">@employee.Position</div>
+                                </div>
+                            </td>
+                            <td class="centered-call @GetEmployeeTypeStyle(employee.Type)">@employee.Type</td>
+                            <td class="centered-call employee-salary">@employee.Salary</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </blazor.Components.Card>
+}
+else
+{
+    <p>Loading...</p>
+}
+
+@code {
+    [Inject] private IEmployeeService EmployeeService { get; set; }
+    private List<Employee>? Employees { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await EmployeeService.GetEmployees();
+        Employees = response?.Employees ?? new List<Employee>();
+    }
+
+    public string GetEmployeeTypeStyle(EmployeeType employeeType) => employeeType switch
+    {
+        EmployeeType.Freelance => "free-lance",
+        EmployeeType.PartTime => "part-time",
+        EmployeeType.Casual => "casual",
+        EmployeeType.FullTime => "full-time",
+        _ => string.Empty,
+    };
+}
