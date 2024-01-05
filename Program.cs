@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using blazor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -11,18 +9,17 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<DataContext>(Options => Options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString));
+// builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+// {
+//     options.Password.RequireDigit = false;
+//     options.Password.RequiredLength = 5;
+//     options.Password.RequireLowercase = false;
+//     options.Password.RequireUppercase = false;
+//     options.Password.RequireNonAlphanumeric = false;
+//     options.SignIn.RequireConfirmedEmail = false;
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
-{
-    options.Password.RequireDigit = false;
-    options.Password.RequiredLength = 5;
-    options.Password.RequireLowercase = false;
-    options.Password.RequireUppercase = false;
-    options.Password.RequireNonAlphanumeric = false;
-    options.SignIn.RequireConfirmedEmail = false;
-
-}).AddEntityFrameworkStores<DataContext>();
+// }).AddEntityFrameworkStores<DataContext>();
 
 
 
