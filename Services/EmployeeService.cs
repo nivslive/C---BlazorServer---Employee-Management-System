@@ -11,6 +11,9 @@ public interface IEmployeeService
 {
     Task<GetEmployeesResponse> GetEmployees();
     Task<AddEmployeeResponse> AddEmployee(AddEmployeeForm employeeForm);
+    Task<BaseResponse> DeleteEmployee(Employee employee);
+    Task<UpdateEmployeeResponse> UpdateEmployee(Employee employee);
+    Task<GetEmployeeResponse> GetEmployee(int id);
 }
 
 public class EmployeeService : IEmployeeService
@@ -47,7 +50,7 @@ public class EmployeeService : IEmployeeService
 
     public async Task<GetEmployeeResponse> GetEmployee(int id)
     {
-        var response = new GetEmployeeResponse();
+        GetEmployeeResponse response = new();
         try
         {
             using var context = _factory.CreateDbContext();
@@ -73,7 +76,62 @@ public class EmployeeService : IEmployeeService
         return response;
     }
 
-    
+    public async Task<BaseResponse> DeleteEmployee(Employee employee)
+    {
+        BaseResponse response = new();
+        try
+        {
+            using var context = _factory.CreateDbContext();
+            context.Remove(employee);
+            var result = await context.SaveChangesAsync();
+            if(result == 1)
+            {
+                response.StatusCode = 200;
+                response.Message = "Employee deleted succesfully!";
+            }
+            else
+            {
+                response.StatusCode = 400;
+                response.Message = "Error while deleting Employee.";                    
+            }
+        } catch(Exception ex)
+        {
+            response.StatusCode = 500;
+            response.Message = $"Error Deleting Employee of Id: {employee.Id} | Error message:" + ex.Message;
+        }
+        return response;
+    }
+
+
+    public async Task<UpdateEmployeeResponse> UpdateEmployee(Employee employee)
+    {
+        UpdateEmployeeResponse response = new();
+
+        try
+        {
+            using var context = _factory.CreateDbContext();
+            context.Update(employee);
+            var result = await context.SaveChangesAsync();
+            if(result == 1)
+            {
+                response.Employee = employee;
+                response.StatusCode = 200;
+                response.Message = "Employee updated succesfully!";
+            }
+            else
+            {
+                response.Employee = null;
+                response.StatusCode = 400;
+                response.Message = "Error while updating Employee.";                    
+            }
+        } catch(Exception ex)
+        {
+            response.StatusCode = 500;
+            response.Message = $"Error Updating Employee of Id: {employee.Id} | Error message:" + ex.Message;
+        }
+        return response;
+    }
+
     public async Task<AddEmployeeResponse> AddEmployee(AddEmployeeForm form)
     {
         var response = new AddEmployeeResponse();
