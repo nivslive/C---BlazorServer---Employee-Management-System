@@ -45,6 +45,8 @@
                     </label>
                     </InputSelect>
                 </div>
+                <button class="btn btn-outline-secondary" type="submit">Update</button>
+                <div class="btn btn-outline-secondary" @onclick="DeleteEmployee">Delete</div>
             </EditForm>
         </div>
     </div>
@@ -54,6 +56,7 @@
 
 @code {
     [Inject] IEmployeeService employeeService {get; set;}
+    [Inject] NavigationManager NavigationManager {get; set;}
     
     [Parameter]
     public int employeeId {get; set;}
@@ -77,6 +80,18 @@
 
     private async Task EditEmployee()
     {
+        Employee.Name = addEmployeeForm.Name;
+        Employee.Type = addEmployeeForm.Type;
+        Employee.Position = addEmployeeForm.Position;
+        Employee.Salary = addEmployeeForm.Salary;
+        Employee.ImgUrl = addEmployeeForm.ImgUrl;
         var response = await employeeService.UpdateEmployee(Employee);
+        NavigationManager.NavigateTo("~/");
+    }
+
+    private async Task DeleteEmployee()
+    {
+        var response = await employeeService.DeleteEmployee(Employee);
+        NavigationManager.NavigateTo("~/");
     }
 }
