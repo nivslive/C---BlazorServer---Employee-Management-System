@@ -2,6 +2,7 @@
 @using blazor.Models;
 @using blazor.Services;
 @using blazor.Models.DTOs;
+@using blazor.Components;
 @if(Employee != null)
 {
 <blazor.Components.Card>
@@ -53,6 +54,11 @@
 </blazor.Components.Card>
 }
 
+@if(SwitchWarningMessage)
+{
+    <Warning OnClickCallback="DismissWarning" Type="@WarningType" Message="@WarningMessage"/>
+}
+
 @if(SwitchDeleteModal) 
 {
     <blazor.Components.DeleteConfirmationModal>
@@ -65,15 +71,19 @@
 }
 
 @code {
+
+    private ApiResponse response;
     [Inject] IEmployeeService employeeService {get; set;}
     [Inject] NavigationManager NavigationManager {get; set;}
-    
-    [Parameter]
-    public int employeeId {get; set;}
+
+    [Parameter] public int employeeId {get; set;}
     private AddEmployeeForm addEmployeeForm {get; set;}
     private Employee? Employee;
 
     private bool SwitchDeleteModal = false;
+    private bool SwitchWarningMessage = false;
+    private string WarningMessage = "";
+    private Components.Warning.WarningType WarningType;
 
     protected override async Task OnInitializedAsync()
     {
@@ -102,7 +112,16 @@
     private async Task DeleteEmployee()
     {
         var response = await employeeService.DeleteEmployee(Employee);
+        ShowWarningMessage();
         NavigationManager.NavigateTo("~/");
+    }
+
+    public void ShowWarningMessage()
+    {
+        WarningType = response.StatusCode == 200 ? Components.Warning.WarningType.Success : Components.Warning.WarningType.Error;
+        WarningMessage = response.Message;
+        SwitchDeleteModal = false;
+        SwitchWarningMessage = true;
     }
 
     private void OpenDeleteModal()
@@ -113,5 +132,11 @@
     private void CloseDeleteModal()
     {
         SwitchDeleteModal = false;
+    }
+
+    private void DismissWarning()
+    {
+        SwitchWarningMessage = false;
+        NavigationManager.NavigateTo("~/");
     }
 }

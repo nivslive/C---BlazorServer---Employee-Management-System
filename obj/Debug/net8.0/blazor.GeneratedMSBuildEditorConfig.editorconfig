@@ -38,6 +38,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9UYWJsZUJ1dHRvbi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/nivs/Documents/prog/C\#/blazor/Components/Warning.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9XYXJuaW5nLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/nivs/Documents/prog/C\#/blazor/Pages/AddEmployee.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWRkRW1wbG95ZWUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
