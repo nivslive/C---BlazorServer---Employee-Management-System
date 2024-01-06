@@ -30,12 +30,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9SZWRpcmVjdFRvTG9naW4ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/nivs/Documents/prog/C\#/blazor/Components/TableButton.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9UYWJsZUJ1dHRvbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/nivs/Documents/prog/C\#/blazor/Pages/AddEmployee.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWRkRW1wbG95ZWUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/nivs/Documents/prog/C\#/blazor/Pages/Counter.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ291bnRlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/nivs/Documents/prog/C\#/blazor/Pages/EmployeeDetail.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRW1wbG95ZWVEZXRhaWwucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/nivs/Documents/prog/C\#/blazor/Pages/EmployeesTable.razor]

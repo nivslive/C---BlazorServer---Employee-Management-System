@@ -23,6 +23,9 @@
                             </td>
                             <td class="centered-call @GetEmployeeTypeStyle(employee.Type)">@employee.Type.GetDisplayName</td>
                             <td class="centered-call employee-salary">@employee.Salary</td>
+                            <td>
+                                <TableButton OnClickCallback="@(() => NavigateToEmployeeDetail(employee.Id))"/>
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -36,6 +39,7 @@ else
 }
 
 @code {
+    [Inject] private NavigationManager NavigationManager {get; set;}
     [Inject] private IEmployeeService EmployeeService { get; set; }
     private List<Employee>? Employees { get; set; }
 
@@ -53,4 +57,8 @@ else
         EmployeeType.FullTime => "full-time",
         _ => string.Empty,
     };
+
+    public void NavigateToEmployeeDetail(int id) {
+        NavigationManager.NavigateTo($"employee/{id}");
+    }
 }
