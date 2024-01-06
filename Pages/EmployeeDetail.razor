@@ -3,6 +3,7 @@
 @using blazor.Services;
 @using blazor.Models.DTOs;
 @using blazor.Components;
+@using blazor.Services.Responses;
 @if(Employee != null)
 {
 <blazor.Components.Card>
@@ -72,7 +73,7 @@
 
 @code {
 
-    private ApiResponse response;
+    private BaseResponse response;
     [Inject] IEmployeeService employeeService {get; set;}
     [Inject] NavigationManager NavigationManager {get; set;}
 
