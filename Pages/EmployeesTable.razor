@@ -7,6 +7,10 @@
 {
     <blazor.Components.Card>
         <div class="table-responsive">
+            <div class="form-floating mb-3">
+                <input @oninput="FilterEmployees" type="text" class="form-control" id="floatingInput" placeholder="Name here">
+                <label for="floatingInput">Search Employee By Name</label>
+            </div>
             <table class="table table-borderless mb-0">
                 <tbody>
                     @foreach (var employee in Employees)
@@ -58,7 +62,13 @@ else
         _ => string.Empty,
     };
 
-    public void NavigateToEmployeeDetail(int id) {
+    public void NavigateToEmployeeDetail(int id) 
+    {
         NavigationManager.NavigateTo($"employee/{id}");
+    }
+
+    public void FilterEmployees(ChangeEventArgs e) 
+    {
+        Employees = Employees.Where(x => x.Name.IndexOf(e.Value.ToString()) >= 0).ToList();
     }
 }
