@@ -1,13 +1,66 @@
 @page "/add-employee"
+@using blazor.Models
 @using blazor.Models.DTOs
 @using blazor.Services
+
+
+
+<blazor.Components.Card>
+    <div class="row user-detail-row">
+        <h3>Add new Employee</h3>
+        <div class="form-group">
+            <EditForm Model="@addEmployeeForm" OnInvalidSubmit="AddNewEmployee">
+                <DataAnnotationsValidator/>
+                <ValidationSummary/>
+                <div class="form-floating mb-3">
+                    <InputText @bind-Value="addEmployeeForm.Name" class="form-control" id="floatingInput" placeholder="Name here"/>
+                    <label for="floatingInput">
+                        Name
+                    </label>
+                </div>
+                <div class="form-floating mb-3">
+                    <InputNumber @bind-Value="addEmployeeForm.Salary" class="form-control" id="floatingInput" placeholder="Salary here"/>
+                    <label for="floatingInput">
+                        Salary
+                    </label>
+                </div>
+                <div class="form-floating mb-3">
+                    <InputSelect @bind-Value="addEmployeeForm.Type" class="form-control" id="floatingInput" placeholder="Type here">
+                        @foreach(EmployeeType type in Enum.GetValues(typeof(EmployeeType)))
+                        {
+                            <option value="@type">@type.GetDisplayName()</option>
+                        }
+                    <label for="floatingInput">
+                        Type
+                    </label>
+                    </InputSelect>
+                </div>
+                <div class="form-floating mb-3">
+                    <InputSelect @bind-Value="addEmployeeForm.Position" class="form-control" id="floatingInput" placeholder="Position here">
+                        @foreach(Position position in Enum.GetValues(typeof(Position)))
+                        {
+                            <option value="@position">@position.GetDisplayName()</option>
+                        }
+                    <label for="floatingInput">
+                        Position
+                    </label>
+                    </InputSelect>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</blazor.Components.Card>
+
+
+
 @code {
     [Inject] private IEmployeeService EmployeeService {get; set;}
-
+    [Inject] private NavigationManager NavigationManager {get; set;}
     private AddEmployeeForm addEmployeeForm = new();
 
-    private async Task addNewEmployee()
+    private async Task AddNewEmployee()
     {
         var response = await EmployeeService.AddEmployee(addEmployeeForm);
+        NavigationManager.NavigateTo("/employees");
     }
 }

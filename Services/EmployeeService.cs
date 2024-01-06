@@ -45,6 +45,35 @@ public class EmployeeService : IEmployeeService
         return response;
     }
 
+    public async Task<GetEmployeeResponse> GetEmployee(int id)
+    {
+        var response = new GetEmployeeResponse();
+        try
+        {
+            using var context = _factory.CreateDbContext();
+            var employee = await context.Employees.FirstOrDefaultAsync(x => x.Id == id);
+            if (employee != null)
+            {
+                response.StatusCode = 200;
+                response.Message = "Employee successfully found!";
+                response.Employee = employee;
+            }
+            else
+            {
+                response.StatusCode = 404; // Not Found
+                response.Message = "Employee not found.";
+            }
+        }
+        catch(Exception ex)
+        {
+            response.StatusCode = 500;
+            response.Message = $"An error occurred: {ex.Message}";
+        }
+
+        return response;
+    }
+
+    
     public async Task<AddEmployeeResponse> AddEmployee(AddEmployeeForm form)
     {
         var response = new AddEmployeeResponse();

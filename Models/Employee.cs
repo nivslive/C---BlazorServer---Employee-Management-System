@@ -14,6 +14,11 @@ public class Employee
     public EmployeeType Type {get; set;}
 
     public Position Position {get; set;}
+
+    public static implicit operator Employee(Task<Employee?> v)
+    {
+        throw new NotImplementedException();
+    }
 }
 
 
