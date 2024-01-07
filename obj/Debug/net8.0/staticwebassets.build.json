@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "0TaOzRsLJRleWYp0IGY06qLwiaU49KjiXqSsPXOHBmU=",
+  "Hash": "qj2mJc7SGl9fkeGjqN6V3mJeMwO9aVIvE92vTdF731s=",
   "Source": "blazor",
   "BasePath": "_content/blazor",
   "Mode": "Default",
@@ -281,6 +281,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/css/site.css"
+    },
+    {
+      "Identity": "/Users/nivs/Documents/prog/C#/blazor/wwwroot/employee.xml",
+      "SourceId": "blazor",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/nivs/Documents/prog/C#/blazor/wwwroot/",
+      "BasePath": "_content/blazor",
+      "RelativePath": "employee.xml",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/employee.xml"
     },
     {
       "Identity": "/Users/nivs/Documents/prog/C#/blazor/wwwroot/favicon.png",

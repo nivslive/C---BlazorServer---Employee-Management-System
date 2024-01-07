@@ -66,6 +66,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/nivs/Documents/prog/C\#/blazor/Pages/XMLEmployeePage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvWE1MRW1wbG95ZWVQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/nivs/Documents/prog/C\#/blazor/Pages/XMLPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvWE1MUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/nivs/Documents/prog/C\#/blazor/Shared/SurveyPrompt.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1N1cnZleVByb21wdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 

@@ -9,6 +9,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<blazor.lib.xml.IXML, blazor.lib.xml.XML>();
 
 builder.Services.AddSingleton<WeatherForecastService>();
 

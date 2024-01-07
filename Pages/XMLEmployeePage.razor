@@ -1,0 +1,58 @@
+@page "/employeexml"
+@inject ILogger<XMLEmployeePage> Logger
+@inject lib.xml.IXML XmlService
+@using lib.xml;
+<h3>Employee XML Page</h3>
+
+@if (xmlData != null)
+{
+    <div>
+        <h4>Parsed XML Data:</h4>
+        <ul>
+            @foreach (var employee in xmlData)
+            {
+                <li>
+                    @foreach (var property in employee.GetType().GetProperties())
+                    {
+                        <span>@FormatProperty(property.Name, property.GetValue(employee))</span>
+                    }
+                </li>
+            }
+        </ul>
+    </div>
+}
+else
+{
+    <p>No XML data available. Please check the XML file.</p>
+}
+
+@code {
+    private List<EmployeeXml> xmlData;
+
+    protected override void OnInitialized()
+    {
+        try
+        {
+            var xmlFilePath = "wwwroot/employee.xml"; // Assuming the file is in the wwwroot directory
+            // var xmlString = System.IO.File.ReadAllText(xmlFilePath);
+            xmlData = XmlService.ReadXMLAndConvertToObject(xmlFilePath);
+            Console.WriteLine(xmlData);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError("Error reading XML file: {Error}", ex.Message);
+        }
+    }
+
+    private string FormatProperty(string propertyName, object value)
+    {
+        if (value is decimal decimalValue)
+        {
+            return $"{propertyName}: {decimalValue:C}";
+        }
+        else
+        {
+            return $"{propertyName}: {value}";
+        }
+    }
+}

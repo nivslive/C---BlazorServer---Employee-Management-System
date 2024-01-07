@@ -1,0 +1,104 @@
+@page "/xml"
+@inject ILogger<XMLPage> Logger
+
+<PageTitle>File Upload 1</PageTitle>
+
+<h1>File Upload Example 1</h1>
+
+<p>
+    <label>
+        Max file size:
+        <input type="number" @bind="maxFileSize" />
+    </label>
+</p>
+
+<p>
+    <label>
+        Max allowed files:
+        <input type="number" @bind="maxAllowedFiles" />
+    </label>
+</p>
+
+<p>
+    <label>
+        Upload up to @maxAllowedFiles of up to @maxFileSize bytes:
+        <InputFile OnChange="@LoadFiles" />
+    </label>
+</p>
+
+@if (isLoading)
+{
+    <p>Uploading...</p>
+}
+else
+{
+    <ul>
+        @foreach (var file in loadedFiles)
+        {
+            <li>
+                <ul>
+                    <li>Name: @file.Name</li>
+                    <li>Last modified: @file.LastModified.ToString()</li>
+                    <li>Size (bytes): @file.Size</li>
+                    <li>Content type: @file.ContentType</li>
+                </ul>
+            </li>
+        }
+    </ul>
+}
+
+
+
+@if (xmlData != null)
+{
+    <div>
+        <h4>Parsed XML Data:</h4>
+        <ul>
+            @foreach (var employee in xmlData)
+            {
+                <li>@employee.Id - @employee.Name - @employee.Salary</li>
+            }
+        </ul>
+    </div>
+}
+else
+{
+    <p>No XML data available. Please upload an XML file.</p>
+}
+
+
+@code {
+    private List<lib.xml.EmployeeXml> xmlData;
+    private string uploadedFileName;
+
+    [Inject] private lib.xml.IXML XmlService { get; set; }
+    private List<IBrowserFile> loadedFiles = new();
+    private long maxFileSize = 1024 * 15;
+    private int maxAllowedFiles = 3;
+    private bool isLoading;
+
+    private async void LoadFiles(InputFileChangeEventArgs e)
+    {
+        isLoading = true;
+        loadedFiles.Clear();
+        foreach (var file in e.GetMultipleFiles(maxAllowedFiles))
+        {
+            try
+            {
+                loadedFiles.Add(file);
+                uploadedFileName = e.File.Name;
+                using var stream = e.File.OpenReadStream();
+                using var reader = new StreamReader(stream);
+                var xmlString = await reader.ReadToEndAsync();
+                xmlData = XmlService.ReadXMLAndConvertToObject(xmlString);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError("File: {FileName} Error: {Error}", 
+                    file.Name, ex.Message);
+            }
+        }
+
+        isLoading = false;
+    }
+}

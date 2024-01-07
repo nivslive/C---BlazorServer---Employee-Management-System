@@ -1,0 +1,17 @@
+<Employees>
+    <Employee>
+        <Id>1</Id>
+        <Name>John Doe</Name>
+        <Salary>50000.00</Salary>
+    </Employee>
+    <Employee>
+        <Id>2</Id>
+        <Name>Jane Smith</Name>
+        <Salary>60000.50</Salary>
+    </Employee>
+    <Employee>
+        <Id>3</Id>
+        <Name>Test Smith</Name>
+        <Salary>60000.50</Salary>
+    </Employee>
+</Employees>
