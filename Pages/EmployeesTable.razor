@@ -12,7 +12,7 @@
             </div>
             <table class="table table-borderless mb-0">
                 <tbody>
-                    @foreach (var employee in Employees)
+                    @foreach (var employee in FilteredEmployees)
                     {
                         <tr class="shadow-lg m-1 employee-row mb-t">
                             <td class="centered-call">
@@ -45,11 +45,12 @@ else
     [Inject] private NavigationManager NavigationManager {get; set;}
     [Inject] private IEmployeeService EmployeeService { get; set; }
     private List<Employee>? Employees { get; set; }
-
+    private List<Employee>? FilteredEmployees { get; set; }
     protected override async Task OnInitializedAsync()
     {
         var response = await EmployeeService.GetEmployees();
         Employees = response?.Employees ?? new List<Employee>();
+        FilteredEmployees = Employees.ToList();
     }
 
     public string GetEmployeeTypeStyle(EmployeeType employeeType) => employeeType switch
@@ -67,7 +68,16 @@ else
     }
 
     public void FilterEmployees(ChangeEventArgs e) 
-    {
-        Employees = Employees.Where(x => x.Name.IndexOf(e.Value.ToString()) >= 0).ToList();
-    }
+        {
+            if(string.IsNullOrWhiteSpace(e.Value?.ToString()))
+            {
+                FilteredEmployees = Employees.ToList(); // Revert to the original list
+            }
+            else
+            {
+                FilteredEmployees = Employees
+                    .Where(x => x.Name.IndexOf(e.Value.ToString(), StringComparison.OrdinalIgnoreCase) >= 0)
+                    .ToList();
+            }
+        }
 }
