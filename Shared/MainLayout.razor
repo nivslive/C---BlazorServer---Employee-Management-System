@@ -5,9 +5,9 @@
 
 
 <div class="page">
-    <CascadingAuthenticationState>
+    @* <CascadingAuthenticationState>
         <AuthorizeView>
-            <Authorized>
+            <Authorized> *@
                 <div class="sidebar">
                     <NavMenu />
                 </div>
@@ -21,11 +21,11 @@
                         @Body
                     </article>
                 </main>
-            </Authorized>
+            @* </Authorized>
 
             <NotAuthorized>
                 <h3>Not Authorized</h3>
             </NotAuthorized>
         </AuthorizeView>
-    </CascadingAuthenticationState>
+    </CascadingAuthenticationState> *@
 </div>

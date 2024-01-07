@@ -10,7 +10,7 @@
     <div class="row user-detail-row">
         <h3>Add new Employee</h3>
         <div class="form-group">
-            <EditForm Model="@addEmployeeForm" OnInvalidSubmit="EditEmployee">
+            <EditForm Model="@addEmployeeForm" OnSubmit="EditEmployee">
                 <DataAnnotationsValidator/>
                 <ValidationSummary/>
                 <div class="form-floating mb-3">
@@ -90,26 +90,48 @@
     {
         var response = await employeeService.GetEmployee(employeeId);
 
-        Employee = response.Employee;
+        if (response.Employee != null)
+        {
+            Employee = response.Employee;
 
-        addEmployeeForm.Name = Employee.Name;
-        addEmployeeForm.Type = Employee.Type;
-        addEmployeeForm.Position = Employee.Position;
-        addEmployeeForm.Salary = Employee.Salary;
-        addEmployeeForm.ImgUrl = Employee.ImgUrl;
+            addEmployeeForm = new AddEmployeeForm
+            {
+                Name = Employee.Name,
+                Type = Employee.Type,
+                Position = Employee.Position,
+                Salary = Employee.Salary,
+                ImgUrl = Employee.ImgUrl
+            };
+        }
+        else
+        {
+            // Lide com o caso em que o Employee é nulo, por exemplo, redirecionando para uma página de erro.
+            NavigationManager.NavigateTo("/error");
+        }
     }
 
     private async Task EditEmployee()
     {
+        Console.WriteLine("EditEmployee method called.");
         Employee.Name = addEmployeeForm.Name;
         Employee.Type = addEmployeeForm.Type;
         Employee.Position = addEmployeeForm.Position;
         Employee.Salary = addEmployeeForm.Salary;
         Employee.ImgUrl = addEmployeeForm.ImgUrl;
-        var response = await employeeService.UpdateEmployee(Employee);
-        NavigationManager.NavigateTo("~/");
-    }
 
+        var response = await employeeService.UpdateEmployee(Employee);
+        Console.WriteLine(response);
+        // Adicione uma verificação de sucesso ou trate de acordo com a resposta.
+        if (response.StatusCode == 200)
+        {
+            // Redirecione ou faça qualquer ação desejada após a atualização bem-sucedida.
+            NavigationManager.NavigateTo("~/");
+        }
+        else
+        {
+            // Trate o erro, mostre uma mensagem, etc.
+        }
+    }
     private async Task DeleteEmployee()
     {
         var response = await employeeService.DeleteEmployee(Employee);

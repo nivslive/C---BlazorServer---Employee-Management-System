@@ -2,7 +2,6 @@
 
 @using blazor.Services
 @using blazor.Models
-
 @if (Employees != null)
 {
     <blazor.Components.Card>
@@ -25,10 +24,10 @@
                                     <div class="employee-position centered-subdiv">@employee.Position</div>
                                 </div>
                             </td>
-                            <td class="centered-call @GetEmployeeTypeStyle(employee.Type)">@employee.Type.GetDisplayName</td>
+                            <td class="centered-call @GetEmployeeTypeStyle(employee.Type)">@employee.Type.GetDisplayName()</td>
                             <td class="centered-call employee-salary">@employee.Salary</td>
                             <td>
-                                <TableButton OnClickCallback="@(() => NavigateToEmployeeDetail(employee.Id))"/>
+                                <blazor.Components.TableButton OnClickCallback="@(() => NavigateToEmployeeDetail(employee.Id))"/>
                             </td>
                         </tr>
                     }
